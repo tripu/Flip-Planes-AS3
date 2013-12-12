@@ -20,7 +20,7 @@ package com.jflorentino.utils
 
 		public function dispatch () : void
 		{
-			if (! _callbacks.length || ! _callbacks)
+			if (!_callbacks || ! _callbacks.length || ! _callbacks)
 				return;
 
 			for (var i : uint = 0 ; i < _callbacks.length; i ++ )

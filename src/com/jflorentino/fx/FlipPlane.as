@@ -7,9 +7,9 @@ package com.jflorentino.fx
 	 */
 	public class FlipPlane extends FlipPlaneCanvas  implements IFlipCanvas
 	{
-		public function FlipPlane ( columns : uint = 10 , rows : uint = 10 )
+		public function FlipPlane ( columns : uint, rows : uint, widthC:Number, heightC:Number)
 		{
-			super ( columns , rows );
+			super ( columns , rows , widthC, heightC);
 			flipY ();
 			behaviors.push ( radialOuter );
 			behaviors.push ( radialCenter );
@@ -86,6 +86,14 @@ package com.jflorentino.fx
 				var delay : Number = (_canvasColumns / 2 - (Math.abs ( _canvasColumns / 2 - planes[i]['tileX'] ))) / _canvasColumns / 2;
 				delay += (_canvasRows / 2 - (Math.abs ( _canvasRows / 2 - planes[i]['tileY'] ))) / _canvasRows / 2;
 				super.animateItem ( planes[i] , delay );
+			}
+		}
+
+		public function substitute () : void
+		{
+			for (var i : uint = 0 ; i < planes.length; i ++ )
+			{
+				super.switchItem( planes[i]);
 			}
 		}
 	}

@@ -35,10 +35,10 @@ package com.jflorentino.fx
 		protected var animation_complete : int;
 		public var finished : Signal;
 
-		public function FlipPlaneCanvas ( columns : uint = 10 , rows : uint = 10 )
+		public function FlipPlaneCanvas ( columns : uint, rows : uint, widthC:Number, heightC:Number)
 		{
-			_canvasWidth = 1122;
-			_canvasHeight = 721;
+			_canvasWidth = widthC;
+			_canvasHeight = heightC;
 			_flipX = 1;
 			_flipY = 1;
 			staticPoint = new Point ();
@@ -53,7 +53,7 @@ package com.jflorentino.fx
 				throw new Error ( '[FlipPlaneCanvas] no patterns defined' );
 
 			animation_complete = 0;
-			_current_behavior = int ( Math.floor ( Math.random () * behaviors.length - 1 ) );
+			_current_behavior = int(Math.round(Math.random () * (behaviors.length - 1)));
 			behaviors[_current_behavior].call ();
 		}
 
@@ -73,6 +73,13 @@ package com.jflorentino.fx
 		public function setNextPattern () : void
 		{
 			_current_pattern ++;
+			if (_current_pattern >= patterns.length)
+				_current_pattern = 0;
+		}
+
+		public function skipOnePattern () : void
+		{
+			_current_pattern += 2;
 			if (_current_pattern >= patterns.length)
 				_current_pattern = 0;
 		}
@@ -181,5 +188,11 @@ package com.jflorentino.fx
 		{
 			TweenMax.to ( plane , .25 , { tint : 0x000000 , delay : delay , scaleX : _flipX , scaleY : _flipY , ease : Back.easeIn , onComplete : onAnimateInComplete , onCompleteParams : [ plane ] } );
 		}
+
+		protected function switchItem ( plane : DisplayObject) : void
+		{
+			TweenMax.to ( plane , 0, { tint : 0x000000 , scaleX : _flipX , scaleY : _flipY , onComplete : onAnimateInComplete , onCompleteParams : [ plane ] } );
+		}
+
 	}
 }
